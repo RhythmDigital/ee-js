@@ -2116,6 +2116,62 @@ MAIN.namespace = function (aNamespace)
 			ctx.arc(this.x, this.y, this.radius*this.scale, 0, 2 * Math.PI, false);
 			ctx.fillStyle = this.color;
 			ctx.fill();
+			ctx.closePath();
+		};
+
+	}
+
+})();
+(function(){
+
+    var namespace = MAIN.namespace('widgets');
+
+    if (namespace.Wedge === undefined) 
+	{
+        namespace.Wedge = function()
+		{	
+			
+		};
+
+		var p = namespace.Wedge.prototype;
+		p.radius = null;
+		p.color = null;
+		p.x = null;
+		p.y = null;
+		p.scale = null;
+		p.degrees = 0;
+		p.startAngle = null;
+		p.offset = -90;
+		
+		p.init = function(x, y, radius, color, angle) {
+			this.radius = radius;
+			this.color = color;
+			this.x = x;
+			this.y = y;
+			this.scale = 1;
+			this.degrees = angle+this.offset;
+			this.startAngle = this.getRad(this.degrees);
+		};
+
+		p.setAngle = function(deg, time) {
+			TweenLite.to(this, time, {degrees:deg+this.offset, onUpdate:this.updateWedge.bind(this), ease:Sine.easeOut});
+		};
+
+		p.updateWedge = function() {
+			this.endAngle = this.getRad(this.degrees);
+		};
+
+		p.getRad = function(deg) {
+			return deg*Math.PI/180;
+		};
+
+		p.draw = function(ctx) {
+			ctx.beginPath();
+			ctx.moveTo(20, 20);
+			ctx.arc(20,20, this.radius, this.startAngle, this.endAngle, false);
+			ctx.fillStyle = this.color;
+			ctx.fill();
+			ctx.closePath();
 		};
 
 	}
@@ -2283,6 +2339,8 @@ MAIN.namespace = function (aNamespace)
 (function(){
 
     var namespace = MAIN.namespace('widgets');
+    var ctxWidth = 40;
+    var ctxHeight = 40;
 
     if (namespace.FilterCounter === undefined) 
 	{
@@ -2291,9 +2349,94 @@ MAIN.namespace = function (aNamespace)
 		};
 
 		var p = namespace.FilterCounter.prototype;
+		p.canvas = null;
+		p.context = null;
+		p.animationID = null;
+		p.counter = null;
+		p.circleBG = null;
+		p.circleWhite = null;
+		p.wedge = null;
+		p.centre = null;
+		p.maxValue = null;
+		p.params = null;
+		p.val = null;
 
-		p.init = function() {
-			console.log("NEW FilterCounter!!!!");
+		p.init = function(params) {
+			console.log("New counter");
+
+			this.params = params;
+
+			this.centre = {x:20, y:20};
+			this.maxValue = params.maxValue;
+			this.canvas = params.canvas[0];
+			this.context = this.canvas.getContext("2d");
+			this.counter = $(params.counter[0]);
+
+			this.context.width = ctxWidth;
+			this.context.height = ctxHeight;
+
+			// make circles
+			this.circleBG = new namespace.BasicCircle();
+			this.circleBG.init(this.centre.x, this.centre.y, 20, "#eae3c9");
+
+			this.wedge = new namespace.Wedge();
+			this.wedge.init(this.centre.x, this.centre.y, 20, "#009c9c", 0);
+
+			this.circleWhite = new namespace.BasicCircle();
+			this.circleWhite.init(this.centre.x, this.centre.y, 16, "#ffffff");
+
+			this.val = 0;
+			this.updateValue(0, true);
+			this.draw();
+
+			TweenLite.delayedCall(params.initialDelay, this.delayedInitialUpdate.bind(this));
+		};
+
+		p.delayedInitialUpdate = function() {
+			this.updateValue(this.params.initialValue);
+		};
+
+		p.enterFrame = function() {
+			this.animationID = requestAnimationFrame( this.enterFrame.bind(this) );
+
+			this.context.clearRect ( 0 , 0 , ctxWidth , ctxHeight );
+			this.draw();
+		};
+
+		p.draw = function() {
+			this.circleBG.draw(this.context);
+			this.wedge.draw(this.context);
+			this.circleWhite.draw(this.context);
+		};
+
+		p.updateValue = function(val, immediateRender) {
+
+			TweenLite.killDelayedCallsTo(this.delayedInitialUpdate);
+			var immediate = immediateRender || false; // animate it?
+			var angle = RHYTHM.Utils.mapRange(val, 0, this.maxValue, 0, 360);
+
+			if(!immediate) {
+
+				if(!this.animationID) {
+					this.enterFrame();
+				}
+
+				this.wedge.setAngle(angle, 0.3);
+				TweenLite.to(this, 0.4, {val:val, ease:Sine.easeOut, onUpdate:this.setValueText.bind(this), onComplete:this.stopAnimating.bind(this), overwrite:2});
+			
+			} else {
+				this.counter.text(val);
+			}
+
+		};
+
+		p.stopAnimating = function() {
+			cancelAnimationFrame( this.animationID );
+			this.animationID = null;
+		};
+
+		p.setValueText = function() {
+			this.counter.text(Math.ceil(this.val));
 		};
 
 	}

@@ -11,13 +11,103 @@
 
 <body id="home">
 
-    <div class="container">
-		<canvas></canvas>
+    <div class="filter-counter" id="filter-counter-0">
+        <div class="filter-counter-number">0</div>
+		<canvas class="filter-counter-canvas" width="40" height="40"></canvas>
     </div>
 
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <div class="filter-counter" id="filter-counter-1">
+        <div class="filter-counter-number">0</div>
+        <canvas class="filter-counter-canvas" width="40" height="40"></canvas>
+    </div>
+
+    <div class="filter-counter" id="filter-counter-2">
+        <div class="filter-counter-number">0</div>
+        <canvas class="filter-counter-canvas" width="40" height="40"></canvas>
+    </div>
+
+    <div class="filter-counter" id="filter-counter-3">
+        <div class="filter-counter-number">0</div>
+        <canvas class="filter-counter-canvas" width="40" height="40"></canvas>
+    </div>
+
+    <div class="filter-counter" id="filter-counter-4">
+        <div class="filter-counter-number">0</div>
+        <canvas class="filter-counter-canvas" width="40" height="40"></canvas>
+    </div>
+
+    <div class="filter-counter" id="filter-counter-5">
+        <div class="filter-counter-number">0</div>
+        <canvas class="filter-counter-canvas" width="40" height="40"></canvas>
+    </div>
+
+    <div class="filter-counter" id="filter-counter-6">
+        <div class="filter-counter-number">0</div>
+        <canvas class="filter-counter-canvas" width="40" height="40"></canvas>
+    </div>
+    
+    <div class="filter-counter" id="filter-counter-7">
+        <div class="filter-counter-number">0</div>
+        <canvas class="filter-counter-canvas" width="40" height="40"></canvas>
+    </div>
+
+    <div class="filter-counter" id="filter-counter-8">
+        <div class="filter-counter-number">0</div>
+        <canvas class="filter-counter-canvas" width="40" height="40"></canvas>
+    </div>
+
+    <div class="filter-counter" id="filter-counter-9">
+        <div class="filter-counter-number">0</div>
+        <canvas class="filter-counter-canvas" width="40" height="40"></canvas>
+    </div>
+
+    <div class="filter-counter" id="filter-counter-10">
+        <div class="filter-counter-number">0</div>
+        <canvas class="filter-counter-canvas" width="40" height="40"></canvas>
+    </div>
+
+    <script src="js/jquery-1.7.1.min.js"></script>
     <script src="js/EEShareDay_0.0.1.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        
+        // init all three and see if they work.
+        $(function(){
+
+            var numCounters = 11;
+            var counters = [];
+            var i=0;
+            var nextCounter = null;
+
+            for(i=0; i < numCounters; ++i) {
+
+                var domEl = $("#filter-counter-"+i);
+                nextCounter = new MAIN.widgets.FilterCounter();
+                nextCounter.init({
+                        canvas:$("canvas", domEl)
+                    ,   counter:$(".filter-counter-number", domEl)
+                    ,   initialValue:0
+                    ,   maxValue:400
+                    ,   initialDelay: 1
+                });
+
+                counters.push(nextCounter);
+            }
+
+            $(document).click(function(e){
+                e.preventDefault();
+
+                
+                for(i=0; i < numCounters; ++i) {
+                    var newVal = Math.round(Math.random()*counters[0].maxValue);
+
+                    counters[i].updateValue(newVal);
+                }
+            });
+
+            // test update
+        });
+    </script>
 
 </body>
 </html>

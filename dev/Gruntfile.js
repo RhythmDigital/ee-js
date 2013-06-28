@@ -20,6 +20,7 @@ module.exports = function(grunt) {
           , 'rhythm/Utils.js'
           , 'rhythm/GlobalAbatement.js'
           , 'rhythm/Circle.js'
+          , 'rhythm/Wedge.js'
           , 'rhythm/bookingvisualiser/BookingVisualiser.js'
           , 'rhythm/filtercounter/FilterCounter.js'
         ],
