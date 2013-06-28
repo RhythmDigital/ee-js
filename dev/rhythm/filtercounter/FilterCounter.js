@@ -24,7 +24,6 @@
 		p.val = null;
 
 		p.init = function(params) {
-			console.log("New counter");
 
 			this.params = params;
 
