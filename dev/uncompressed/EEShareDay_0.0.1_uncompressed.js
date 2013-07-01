@@ -2443,9 +2443,9 @@ MAIN.namespace = function (aNamespace)
 })();
 (function(){
 
-	$(".section").each(function(id, el){
-		$(this).hide();
-	});
+	// $(".section").each(function(id, el){
+	// $(this).hide();
+	// });
 
 	$(function(){
 		var stagger = 100;
