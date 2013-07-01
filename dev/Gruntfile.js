@@ -15,6 +15,7 @@ module.exports = function(grunt) {
     concat: {
       dist: {
         src: ['<banner:meta.banner>'
+          , 'libs/gs/plugins/CSSPlugin.js'
           , 'libs/gs/easing/EasePack.js'
           , 'libs/gs/TweenLite.js'
           , 'rhythm/Utils.js'
