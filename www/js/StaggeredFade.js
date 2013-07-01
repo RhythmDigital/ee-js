@@ -1,12 +1,12 @@
 (function(){
 
 	$(".section").each(function(id, el){
-		$(this).css("top", "100px");
+		$(this).css("top", "50px");
 	});
 
 	$(function(){
 		if($(window).width() >= 768) {
-			var stagger = 80;
+			var stagger = 300;
 			var time = 450;
 
 			$(".section").each(function(id, el){
