@@ -1,8 +1,3 @@
-var isCanvasSupported = isCanvasSupported || function() {
-    var elem = document.createElement('canvas');
-    return !!(elem.getContext && elem.getContext('2d'));
-}
-
 // Request animation frame polyfill.
 (function() {
     var lastTime = 0;
@@ -117,3 +112,8 @@ RHYTHM.Trig = RHYTHM.Trig || (function() {
         }
     };
 })();
+
+var isCanvasSupported = isCanvasSupported || function() {
+    var elem = document.createElement('canvas');
+    return !!(elem.getContext && elem.getContext('2d'));
+};

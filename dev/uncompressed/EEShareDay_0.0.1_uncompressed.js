@@ -4158,11 +4158,6 @@
 		_tickerActive = false; //ensures that the first official animation forces a ticker.tick() to update the time when it is instantiated
 	
 })(window);
-var isCanvasSupported = isCanvasSupported || function() {
-    var elem = document.createElement('canvas');
-    return !!(elem.getContext && elem.getContext('2d'));
-}
-
 // Request animation frame polyfill.
 (function() {
     var lastTime = 0;
@@ -4277,6 +4272,11 @@ RHYTHM.Trig = RHYTHM.Trig || (function() {
         }
     };
 })();
+
+var isCanvasSupported = isCanvasSupported || function() {
+    var elem = document.createElement('canvas');
+    return !!(elem.getContext && elem.getContext('2d'));
+};
 /**
  * Global Abatement
  */
