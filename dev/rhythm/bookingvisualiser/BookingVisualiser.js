@@ -35,6 +35,10 @@
 		p.initialDelay = null;
 
 		p.init = function(params) {
+			
+			if(!isCanvasSupported()) {
+				return;
+			}
 
 			this.params = params;
 			this.canvas = params.canvas[0];	// main canvas
@@ -80,7 +84,6 @@
 				}
 				nextY += (circleDiameter+margY);
 			}
-
 		};
 
 		p.animate = function() {

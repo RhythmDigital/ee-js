@@ -25,6 +25,10 @@
 
 		p.init = function(params) {
 
+			if(!isCanvasSupported()) {
+				return;
+			}
+
 			this.params = params;
 
 			this.centre = {x:20, y:20};

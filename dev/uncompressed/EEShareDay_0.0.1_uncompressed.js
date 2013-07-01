@@ -4158,6 +4158,11 @@
 		_tickerActive = false; //ensures that the first official animation forces a ticker.tick() to update the time when it is instantiated
 	
 })(window);
+var isCanvasSupported = isCanvasSupported || function() {
+    var elem = document.createElement('canvas');
+    return !!(elem.getContext && elem.getContext('2d'));
+}
+
 // Request animation frame polyfill.
 (function() {
     var lastTime = 0;
@@ -4427,6 +4432,10 @@ MAIN.namespace = function (aNamespace)
 		p.initialDelay = null;
 
 		p.init = function(params) {
+			
+			if(!isCanvasSupported()) {
+				return;
+			}
 
 			this.params = params;
 			this.canvas = params.canvas[0];	// main canvas
@@ -4472,7 +4481,6 @@ MAIN.namespace = function (aNamespace)
 				}
 				nextY += (circleDiameter+margY);
 			}
-
 		};
 
 		p.animate = function() {
@@ -4575,6 +4583,10 @@ MAIN.namespace = function (aNamespace)
 		p.val = null;
 
 		p.init = function(params) {
+
+			if(!isCanvasSupported()) {
+				return;
+			}
 
 			this.params = params;
 
