@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EE JS Widgets - Filter Counter</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body id="home">
+
+    <div class="filter-counter">
+        <div id="flash-counter-0"></div>
+    </div>
+
+    <div class="filter-counter">
+        <div id="flash-counter-1"></div>
+    </div>
+
+    <div class="filter-counter">
+        <div id="flash-counter-2"></div>
+    </div>
+
+    <div class="filter-counter">
+        <div id="flash-counter-3"></div>
+    </div>
+
+    <div class="filter-counter">
+        <div id="flash-counter-4"></div>
+    </div>
+
+    <div class="filter-counter">
+        <div id="flash-counter-5"></div>
+    </div>
+
+    <div class="filter-counter">
+        <div id="flash-counter-6"></div>
+    </div>
+
+    <div class="filter-counter">
+        <div id="flash-counter-7"></div>
+    </div>
+
+    <div class="filter-counter">
+        <div id="flash-counter-8"></div>
+    </div>
+
+    <div class="filter-counter">
+        <div id="flash-counter-9"></div>
+    </div>
+
+    <div class="filter-counter">
+        <div id="flash-counter-10"></div>
+    </div>
+
+    <script src="js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="js/swfobject.js"></script>
+
+    <script>
+
+        var numCounters = 11;
+        var counters = [];
+        var i=0;
+        var flashParams = {wmode:"transparent", allowscriptaccess:"always", menu:"false"};
+        var numInitialised = 0;
+        var countersReady = false;
+
+        // 1. Found a swf reference
+        function onSWFRef(e) {
+            counters[e.id] = e.ref;
+        }
+
+        // 2. A flash element says it's ready, and has passed us the id (which was sent as a flashVar in the SWFObject embed code.)
+        function flashReady(flashID) {
+            
+            var swf = counters[flashID];
+            
+            swf.init({
+                initialValue:Math.random()*400
+            ,   maxValue:400
+            ,   initialDelay: 2
+            });
+
+            // check how many counters are ready.
+            numInitialised++;
+            if(numInitialised === numCounters) {
+                countersReady = true;   // all counters are ready
+            }
+        }
+
+        // document ready
+        $(function() {
+
+            // Do the swf object swapping.
+            for(i=0; i < numCounters; ++i) {
+
+                var nextID = "flash-counter-"+i;
+                swfobject.embedSWF("FilterCounter.swf", nextID, "40", "40", "10.0.0", "expressInstall.swf", {flashID:nextID}, flashParams, {}, onSWFRef);
+            }
+
+            // Mouse event for testing value updates.
+            $(document).bind("mousedown", function(e){
+                if(countersReady) {
+                    for(i=0; i < numCounters; ++i) {
+                        counters["flash-counter-"+i].updateValue(Math.random()*400);
+                    }
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>

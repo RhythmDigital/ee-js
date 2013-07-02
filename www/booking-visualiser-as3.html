@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EE JS Widgets - Booking Visualiser</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body id="home">
+
+    <div class="booking-visualiser-container">
+        <div id="booking-visualiser"></div>
+        <h1 class="number-remaining">0</h1>
+    </div>
+    
+    <script type="text/javascript" src="js/swfobject.js"></script>
+
+    <script type="text/javascript">
+
+        var swf = null;
+
+        // 1. Found the swf reference
+        function onSWFRef(e) {
+            swf = e.ref;
+        }
+
+        // 2. Flash says it's ready, and passes it's id.
+        function flashReady() {
+            
+            swf.init({
+                    totalSeats: 400
+                ,   remainingSeats: 50
+                ,   initialDelay: 1
+                ,   animateSeatsInTime: 1.5
+                ,   animateSeatsOutMaxTime: 4
+            });
+        }
+
+        swfobject.embedSWF("BookingVisualiser.swf", "booking-visualiser", "882", "218", "10.0.0", "expressInstall.swf", {}, {wmode:"transparent", allowscriptaccess:"always", menu:"false"}, {id:"booking-visualiser"}, onSWFRef);
+    </script>
+
+</body>
+</html>

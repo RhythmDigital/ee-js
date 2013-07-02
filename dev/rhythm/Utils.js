@@ -87,7 +87,7 @@ RHYTHM.Utils = RHYTHM.Utils || (function(){
 
             return arrayOut;
         },
-
+        
         arrayGetRandom: function(numItems, arrayIn) {
             var clone = RHYTHM.Utils.arrayClone(arrayIn);
             var arrayOut = [];

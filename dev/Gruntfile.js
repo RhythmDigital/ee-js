@@ -24,7 +24,6 @@ module.exports = function(grunt) {
           , 'rhythm/Wedge.js'
           , 'rhythm/bookingvisualiser/BookingVisualiser.js'
           , 'rhythm/filtercounter/FilterCounter.js'
-          , 'rhythm/staggeropacity/StaggerOpacity.js'
         ],
         dest: './uncompressed/<%=pkg.name%>_<%=pkg.version%>_uncompressed.js'
       }

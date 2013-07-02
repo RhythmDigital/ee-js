@@ -1,0 +1,1 @@
+﻿package com.leebrimelow.ui{	import flash.events.*;		public class ScrollBarEvent extends Event	{		public static const VALUE_CHANGED = "valueChanged";		public var scrollValue:Number;				public function ScrollBarEvent(scrollValue:Number):void		{			super(VALUE_CHANGED);			this.scrollValue = scrollValue;		}	}}

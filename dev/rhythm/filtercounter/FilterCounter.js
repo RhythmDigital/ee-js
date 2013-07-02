@@ -30,7 +30,7 @@
 			}
 
 			this.params = params;
-
+			
 			this.centre = {x:20, y:20};
 			this.maxValue = params.maxValue;
 			this.canvas = params.canvas[0];
@@ -79,7 +79,7 @@
 			TweenLite.killDelayedCallsTo(this.delayedInitialUpdate);
 			var immediate = immediateRender || false; // animate it?
 			var angle = RHYTHM.Utils.mapRange(val, 0, this.maxValue, 0, 360);
-
+			
 			if(!immediate) {
 
 				if(!this.animationID) {
